@@ -1,0 +1,201 @@
+use towns
+db.towns.insert({"name": "Punxsutawney ", "populatiuon": 6200,"last_sensus": ISODate("2022-01-31"), "famous_for": [""], mayor: { "name": "Jim Wehrle"}})
+
+db.towns.insert({"name": "New York ", "populatiuon": 22200000,"last_sensus": ISODate("2022-01-31"), "famous_for": ["status of liberty", "food"], mayor: { "name": "Michael Bloomberg", "party": "I"}})
+
+db.towns.insert({"name": "Portland", "populatiuon": 528000,"last_sensus": ISODate("2022-07-20"), "famous_for": ["beer", "food"], mayor: { "name": "Sam Adams", "party": "D"}})
+
+
+db.users.insert({"name": "Alex", "age": 28, company: {"name":"microsoft", "country":"USA"}})
+
+db.users.insert({"name": "Tom", "age": 28, languages: ["english", "spanish"]})
+db.users.insert({"name": "Bill", "age": 32, languages: ["english", "french"]})
+db.users.insert({"name": "Tom", "age": 32, languages: ["english", "german"]})
+db.users.find({"company.name": "microsoft"})
+
+use towns
+db.towns.insert({name: "Punxsutawney ", 
+populatiuon: 6200, 
+last_sensus: ISODate("2022-01-31"), 
+famous_for: [""], 
+mayor: {
+   name: "Jim Wehrle" 
+}})
+db.towns.insert({name: "New York", 
+populatiuon: 22200000, 
+last_sensus: ISODate("2022-07-31"), 
+famous_for: ["status of liberty", "food"], 
+mayor: {
+   name: "Michael Bloomberg", 
+party: "I"}}
+})
+db.towns.insert({name: "Portland", 
+populatiuon: 528000, 
+last_sensus: ISODate("2022-07-20"), 
+famous_for: ["beer", "food"], 
+mayor: {
+   name: "Sam Adams", 
+party: "D"}}
+)
+
+db.towns.find({"mayor.party":"I"},{name:1,mayor:1,_id:0})
+db.towns.find({"mayor.party":{$exists:false}},{name:1,mayor:1,_id:0})
+
+fn = function() { return this.name=="Tom"; }
+db.users.find(fn)
+db.users.find("this.name=='Tom'")
+
+function sqrt(n) {return n*n;}
+sqrt(5)
+
+var cursor = db.users.find(); 
+
+
+var cursor = db.unicorns.find({gender:"m"});null;cursor.sort({name:1}).limit(2);null; cursor.forEach(function(obj){ print(obj.name); })
+db.unicorns.insert({name: 'Horny', loves: ['carrot','papaya'], weight: 600, gender: 'm', vampires: 63});
+db.unicorns.insert({name: 'Aurora', loves: ['carrot', 'grape'], weight: 450, gender: 'f', vampires: 43});
+db.unicorns.insert({name: 'Unicrom', loves: ['energon', 'redbull'], weight: 984, gender: 'm', vampires: 182});
+db.unicorns.insert({name: 'Roooooodles', 44), loves: ['apple'], weight: 575, gender: 'm', vampires: 99});
+db.unicorns.insert({name: 'Solnara', loves:['apple', 'carrot', 'chocolate'], weight:550, gender:'f', vampires:80});
+db.unicorns.insert({name:'Ayna', loves: ['strawberry', 'lemon'], weight: 733, gender: 'f', vampires: 40});
+db.unicorns.insert({name:'Kenny', loves: ['grape', 'lemon'], weight: 690,  gender: 'm', vampires: 39});
+db.unicorns.insert({name: 'Raleigh', loves: ['apple', 'sugar'], weight: 421, gender: 'm', vampires: 2});
+db.unicorns.insert({name: 'Leia', loves: ['apple', 'watermelon'], weight: 601, gender: 'f', vampires: 33});
+db.unicorns.insert({name: 'Pilot', loves: ['apple', 'watermelon'], weight: 650, gender: 'm', vampires: 54});
+db.unicorns.insert ({name: 'Nimue', loves: ['grape', 'carrot'], weight: 540, gender: 'f'});
+db.unicorns.insert ({name: 'Dunx', loves: ['grape', 'watermelon'], weight: 704, gender: 'm', vampires: 165})
+db.users.count()
+db.users.find({name: "Alex"}).count()
+db.users.find({name: "Tom"}).skip(2).count(true)
+db.unicorns.find({weight:{$gte:500, $lte:600},gender : 'f'}).count()
+
+db.users.distinct("name")
+["Tom", "Bill", "Alex"]
+db.unicorns.distinct("loves")
+
+db.users.aggregate({"$group":{_id:"$name",count:{$sum:1})
+db.unicorns.aggregate({"$group":{_id:"$gender",count:{$sum:1}}})
+
+db.users.save({name: "Eugene", age : 29, languages: ["english", "german", "spanish"]})
+
+WriteResult({"nInserted" : 1 })
+db.unicorns.save({name: 'Barny', loves: ['grape'], weight: 340, gender: 'm'})
+db.users.update({name : "Tom"}, {name: "Tom", age : 25, married : false},{upsert: true})
+
+WriteResult({"nMatched" : 1, "nUpserted": 0, "nModified": 1})
+
+db.unicorns.update({name: "Ayna"},{$set: {weight: 800, vampires: 51}})
+db.users.update({name : "Eugene", age: 29}, {$set: {age : 30}})
+db.users.update({name : "Tom"},{$set: {name: "Tom", age : 25, married : false}}, {multi:true})
+db.unicorns.update({name: "Raleigh"},{$set: {loves: ["apple", "lemon"]}})
+db.unicorns.update({name: "Raleigh"},{$set: {loves: "redbul"}})
+
+db.users.update({name : "Tom"}, {$inc: {salary:100}})
+db.unicorns.update({gender:'m'},{$inc:{ vampires:5}},{multi:true} )
+updateMany
+
+db.users.update({name : "Tom"}, {$unset: {salary: 1}})
+db.users.update({name : "Tom"}, {$unset: {salary: 1, age: 1}})
+db.towns.update({name:"Portland"},{$unset:{"mayor.party":1}})
+db.towns.update({name:"Portland"},{$set:{"mayor.party":"D"}})
+db.users.update({name : "Tom"}, {$push: {languages: "russian"}})
+db.unicorns.update({name:"Pilot"},{$push:{loves:"chocolate"}})
+db.users.update({name : "Tom"}, {$addToSet: {languages: "russian"}})
+db.users.update({name : "Tom"}, {$addToSet: {languages: {$each: ["russian", "spanish", "italian"]}}})
+db.unicorns.update({name:"Aurora"},{$addToSet:{loves:{$each:["lemon","sugar"]}}})
+db.users.update({name : "Tom"}, {$pop: {languages: 1}})
+db.users.update({name : "Tom"}, {$pop: {languages: -1}})
+db.users.update({name : "Tom"}, {$pull: {languages: "english"}})
+db.users.update({name : "Tom"}, {$pullAll: {languages: ["english", "german", "french"]}})
+db.users.remove({name : "Tom"})
+
+db.towns.remove({"mayor.party":{$exists:false}})
+db.towns.remove({})
+db.getCollectionNames()
+
+
+
+db.companies.insert({"_id" : "microsoft", year: 1974})
+db.users.insert({name: "Tom", age: 28, company: "microsoft"})
+db.users.insert({name: "Tom", age: 28, company: "microsoft"})
+apple=({"name" : "apple", "year": 1976})
+db.companies.save(apple)
+steve = ({"name": "Steve", "age": 25, company: new DBRef('companies', apple._id)})
+db.users.save(steve)
+db.companies.findOne({_id: steve.company.$id})
+
+db.countries.insert({_id:"us", name:"US"})
+db.users.update({_id:ObjectId("573d7468bfe2c1a9875562e6")},{$set: {country:{$ref:"countries", $id: "us"}}})
+var tom=db.users.findOne({"_id":ObjectId("573d7468bfe2c1a9875562e6")})
+db.countries.findOne({_id:tom.country.$id})
+db[tom.country.$ref].findOne({_id:tom.country.$id})
+db.place.insert({_id:"tw", name:"town", description:"Cold and dirty"})
+db.place.insert({_id:"se",name:"sea",description:"Blue and warm"})
+db.unicorns.update({_id:ObjectId("636e3bdc3c6dae7bb1e6b5ee")},{$set: {place:{$ref:"place", $id: "sa"}}})
+db.unicorns.update({_id:ObjectId("6371ff1702a5e0966061956a")},{$set:{place:{$ref:"place", $id: "sa"}}})
+
+db.unicorns.update({_id: ObjectId("6371fab202a5e0966061955f")},{$set:{place:{$ref:"place",$id: "tw"}}})
+db.unicorns.update({_id: ObjectId("6371fafc02a5e09660619560")},{$set:{place:{$ref:"place",$id:"fr"}}})
+
+use.unicorns.find()
+
+db.unicorns.insert({name: 'Horny', loves: ['carrot','papaya'], weight: 600, gender: 'm', vampires: 63});
+db.unicorns.insert({name: 'Aurora', loves: ['carrot', 'grape'], weight: 450, gender: 'f', vampires: 43});
+db.unicorns.insert({name: 'Unicrom', loves: ['energon', 'redbull'], weight: 984, gender: 'm', vampires: 182});
+db.unicorns.insert({name: 'Roooooodles', 44), loves: ['apple'], weight: 575, gender: 'm', vampires: 99});
+db.unicorns.insert({name: 'Solnara', loves:['apple', 'carrot', 'chocolate'], weight:550, gender:'f', vampires:80});
+db.unicorns.insert({name:'Ayna', loves: ['strawberry', 'lemon'], weight: 733, gender: 'f', vampires: 40});
+db.unicorns.insert({name:'Kenny', loves: ['grape', 'lemon'], weight: 690,  gender: 'm', vampires: 39});
+db.unicorns.insert({name: 'Raleigh', loves: ['apple', 'sugar'], weight: 421, gender: 'm', vampires: 2});
+db.unicorns.insert({name: 'Leia', loves: ['apple', 'watermelon'], weight: 601, gender: 'f', vampires: 33});
+db.unicorns.insert({name: 'Pilot', loves: ['apple', 'watermelon'], weight: 650, gender: 'm', vampires: 54});
+db.unicorns.insert ({name: 'Nimue', loves: ['grape', 'carrot'], weight: 540, gender: 'f'});
+db.unicorns.insert {name: 'Dunx', loves: ['grape', 'watermelon'], weight: 704, gender: 'm', vampires: 165}
+db.users.ensureIndex({"name" : 1})
+
+
+db.users.insert({"name": "Tom", "age": 28, languages: ["english", "spanish"]})
+db.users.insert({"name": "Bill", "age": 32, languages: ["english", "french"]})
+db.users.insert({"name": "Tom", "age": 32, languages: ["english", "german"]})
+db.users.ensureIndex({"name" : 1}, {"unique" : true}) 
+db.unicorns.ensureIndex({"name" : 1}, {"unique" : true}) 
+
+db.unicorns.insert({name: 'Horny', dob: new Date(1992,2,13,7,47), loves: ['carrot','papaya'], weight: 600, gender: 'm', vampires: 63});
+db.unicorns.insert({name: 'Aurora', dob: new Date(1991, 0, 24, 13, 0), loves: ['carrot', 'grape'], weight: 450, gender: 'f', vampires: 43});
+db.unicorns.insert({name: 'Unicrom', dob: new Date(1973, 1, 9, 22, 10), loves: ['energon', 'redbull'], weight: 984, gender: 'm', vampires: 182});
+db.unicorns.insert({name: 'Roooooodles', dob: new Date(1979, 7, 18, 18, 44), loves: ['apple'], weight: 575, gender: 'm', vampires: 99});
+db.unicorns.insert({name: 'Solnara', dob: new Date(1985, 6, 4, 2, 1), loves:['apple', 'carrot', 'chocolate'], weight:550, gender:'f', vampires:80});
+db.unicorns.insert({name:'Ayna', dob: new Date(1998, 2, 7, 8, 30), loves: ['strawberry', 'lemon'], weight: 733, gender: 'f', vampires: 40});
+db.unicorns.insert({name:'Kenny', dob: new Date(1997, 6, 1, 10, 42), loves: ['grape', 'lemon'], weight: 690,  gender: 'm', vampires: 39});
+db.unicorns.insert({name: 'Raleigh', dob: new Date(2005, 4, 3, 0, 57), loves: ['apple', 'sugar'], weight: 421, gender: 'm', vampires: 2});
+db.unicorns.insert({name: 'Leia', dob: new Date(2001, 9, 8, 14, 53), loves: ['apple', 'watermelon'], weight: 601, gender: 'f', vampires: 33});
+db.unicorns.insert({name: 'Pilot', dob: new Date(1997, 2, 1, 5, 3), loves: ['apple', 'watermelon'], weight: 650, gender: 'm', vampires: 54});
+db.unicorns.insert ({name: 'Nimue', dob: new Date(1999, 11, 20, 16, 15), loves: ['grape', 'carrot'], weight: 540, gender: 'f'});
+db.unicorns.insert {name: 'Dunx', dob: new Date(1976, 6, 18, 18, 18), loves: ['grape', 'watermelon'], weight: 704, gender: 'm', vampires: 165
+db.users.ensureIndex({"name" : 1, "age" : 1}, {"unique" : true})
+db.system.indexes.find()
+
+db.numbers.getIndexes()
+[
+        {
+                "v" : 1,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "learn.numbers"
+        }
+]
+
+db.users.dropIndex("value")
+
+db.unicorns.getIndexes()
+db.unicorns.dropIndex("name_1")
+
+db.users.explain("executionStats").find({}})
+
+for(i = 0; i < 100000; i++){db.numbers.insert({value: i})}
+
+var cursor = db.numbers.find();null;
+for(i = 0; i < 100000; i++){db.numbers.insert({value: i})};
+db.numbers.find().limit(4).sort({value: -1})
